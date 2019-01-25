@@ -1,0 +1,91 @@
+#controls {
+    width: 590px;
+    height: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.addListForm {
+    width: 270px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 5px #E0E0E0;
+    padding: 5px;
+    margin: 0 auto;
+    float: left;
+
+    .icon {
+        display: inline-block;
+        font-style: bold;
+    }
+
+    .title {
+        width: 200px;
+        border: 0px;
+        background-color: transparent;
+        border-radius: 5px;
+        border: 2px solid #F8F8F8;
+        height: 40px;
+        font-size: 1.2em;
+        padding: 3px;
+        font-family: 'Roboto Condensed', sans-serif;
+        float: left;
+    }
+
+    .title:focus {
+        border: 2px solid #0066CC;
+    }
+
+    .buttonCtrl {
+        float: left;
+        width: 60px;
+        height: 40px;
+        margin-left: 5px;
+
+        button {
+            width: 30px;
+            height: 30px;
+            margin-top: 5px;
+            float: left;
+            border-radius: 20px;
+        }
+    }
+}
+
+#filterLists {
+    width: 270px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 5px #E0E0E0;
+    padding: 5px;
+    margin: 0 auto;
+    float: left;
+    margin-left: 20px;
+
+    .selectedFilter {
+        width: 90%;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 auto;
+        cursor: pointer;
+
+        .icon {
+            font-size: 1.2em;
+            margin-right: 20px;
+            color: rgba( 22, 230, 137, 1 );
+        }
+
+        .iconOpenFilters {
+            font-size: 1.2em;
+            float: right;
+            margin-top: 5px;
+            color: #A8A8A8;
+        }
+    }
+
+    .filterContent {
+        display: none;
+    }
+}
