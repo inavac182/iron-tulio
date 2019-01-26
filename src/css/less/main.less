@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Lobster|Roboto+Condensed:300,400,700');
 
 * {
     margin: 0;
@@ -19,15 +19,37 @@ header {
     box-shadow: 0px 0px 2px #E0E0E0;
     margin: 0;
     padding: 0;
+    text-align: center;
 
-    .title {
-        margin-left: 20px;
-        margin-top: 5px;
+    .logoContainer {
+        width: 200px;
+        margin: 0 auto;
+
+        .icon {
+            width: 30px;
+            margin: 0 auto;
+            float: left;
+        }
+
+        .title {
+            width: 150px;
+            line-height: 40px;
+            font-family: 'Lobster', cursive;
+            margin: 0 auto;
+            text-align: center;
+        }
     }
 }
 
+@import url('buttons.less');
+@import url('inputs.less');
+
+#main {
+    max-width: 100%;
+}
 #content {
     margin-top: 20px;
+    overflow-y: scroll;
 }
 
 .clearer {
@@ -38,6 +60,7 @@ header {
 
 
 @import url('colsView.less');
+@import url('cards.less');
 @import url('skeletons.less');
 @import url('listControls.less');
-@import url('buttons.less');
+

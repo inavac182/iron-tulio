@@ -1,4 +1,10 @@
 @font-face {
+  font-family: 'Lobster';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lobster Regular'), local('Lobster-Regular'), url(https://fonts.gstatic.com/s/lobster/v20/neILzCirqoswsqX9zoKmNg.ttf) format('truetype');
+}
+@font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 300;
@@ -33,13 +39,108 @@ header {
   box-shadow: 0px 0px 2px #E0E0E0;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
-header .title {
-  margin-left: 20px;
-  margin-top: 5px;
+header .logoContainer {
+  width: 200px;
+  margin: 0 auto;
+}
+header .logoContainer .icon {
+  width: 30px;
+  margin: 0 auto;
+  float: left;
+}
+header .logoContainer .title {
+  width: 150px;
+  line-height: 40px;
+  font-family: 'Lobster', cursive;
+  margin: 0 auto;
+  text-align: center;
+}
+button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: 0;
+  -webkit-appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+/* Custom */
+button {
+  display: inline-block;
+  position: relative;
+  top: 0;
+  font-size: 1em;
+  color: #fff;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+button.accept {
+  background: #16e689;
+  border-bottom: 1px solid rgba(28, 227, 125, 0.5);
+}
+button.cancel {
+  background-color: #FF3300;
+  border-bottom: 1px solid #FF3300;
+}
+button:hover {
+  top: -5px;
+  -webkit-transform: rotateX(20deg);
+  -moz-transform: rotateX(20deg);
+  -ms-transform: rotateX(20deg);
+  transform: rotateX(20deg);
+}
+button:hover.accept {
+  box-shadow: 0px 10px 10px rgba(15, 165, 60, 0.2);
+}
+button:hover.cancel {
+  box-shadow: 0px 10px 10px rgba(255, 0, 0, 0.2);
+}
+button:active {
+  top: 0px;
+  box-shadow: 0px 0px 0px rgba(15, 165, 60, 0);
+}
+button:active.accept {
+  background: #14e085;
+}
+button:active.cancel {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+input[type=text] {
+  width: 250px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 3px solid #F5F5F5;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 3px;
+  font-family: 'Roboto Condensed', sans-serif;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  resize: none;
+  float: left;
+}
+input[type=text]:focus {
+  background-color: #ffffff;
+  border: 3px solid #0066CC;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px #E0E0E0;
+}
+#main {
+  max-width: 100%;
 }
 #content {
   margin-top: 20px;
+  overflow-y: scroll;
 }
 .clearer {
   clear: both;
@@ -54,11 +155,25 @@ header .title {
   margin-left: 30px;
   float: left;
 }
-.colsView .list .listTitle {
+.colsView .list .inputTitle {
+  width: 250px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 3px solid #F5F5F5;
+  cursor: pointer;
   font-size: 1.2em;
-  font-weight: 700;
-  margin-bottom: 10px;
+  padding: 3px;
+  font-family: 'Roboto Condensed', sans-serif;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  resize: none;
   float: left;
+}
+.colsView .list .inputTitle:focus {
+  background-color: #ffffff;
+  border: 3px solid #0066CC;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px #E0E0E0;
 }
 .colsView .list .removeList {
   float: right;
@@ -66,7 +181,34 @@ header .title {
   height: 30px;
   border-radius: 20px;
 }
-.colsView .list .item {
+.colsView #emptyLists {
+  width: 300px;
+  height: 50px;
+  line-height: 50px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 50px;
+}
+.colsView .newItemForm {
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 5px;
+  border-top: 1px solid #E8E8E8;
+}
+.colsView .newItemForm button {
+  float: right;
+  margin-top: 3px;
+}
+.colsView .noCardsAdded {
+  width: 100%;
+  height: 50px;
+  background-color: #D0D0D0;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.item {
   background-color: #ffffff;
   border-radius: 2px;
   width: 100%;
@@ -74,26 +216,71 @@ header .title {
   max-height: 150px;
   border: 1px solid #E0E0E0;
   position: relative;
+  margin-top: 10px;
+  -moz-transition: min-height 1s ease;
+  -webkit-transition: min-height 1s ease;
+  -o-transition: min-height 1s ease;
+  transition: min-height 1s ease;
 }
-.colsView .list .item .title {
+.item .title {
   margin-top: 10px;
 }
-.colsView .actionButton {
+.item .actionButton {
   width: 20%;
   position: absolute;
   height: 100%;
 }
-.colsView .main {
+.item .main {
   margin-top: 5px;
   width: 75%;
   padding-left: 5px;
   right: 0;
   float: right;
 }
-.colsView .assignedView {
+.item .assignedView {
   width: 100%;
   height: 30px;
   margin-top: 5px;
+}
+.item .checkbox {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  border-radius: 5px;
+  margin: 0 auto;
+  position: absolute;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.item.status-2 {
+  background-color: #E8E8E8;
+  font-size: 0.8em;
+  min-height: 30px;
+}
+.item.status-2 .labels {
+  display: none;
+}
+.item.status-2 .assignedView {
+  display: none;
+}
+.item.status-2 .checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  background-color: #FFCC33;
+  border-bottom: 1px solid #FFCC33;
+}
+.item.status-2 .checkbox:hover {
+  box-shadow: 0px 10px 10px #FFCC33;
+}
+.item.status-2 .checkbox .icon {
+  width: 10px;
+  height: 10px;
+}
+.item.status-2 .title {
+  text-decoration: line-through;
+  margin-top: 4px;
 }
 .lineSkeleton {
   width: 95%;
@@ -245,59 +432,4 @@ header .title {
 }
 #filterLists .filterContent {
   display: none;
-}
-button {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  outline: 0;
-  -webkit-appearance: none;
-}
-/* Custom */
-button {
-  display: inline-block;
-  position: relative;
-  top: 0;
-  font-size: 1em;
-  color: #fff;
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  -ms-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-button.accept {
-  background: #16e689;
-  border-bottom: 1px solid rgba(28, 227, 125, 0.5);
-}
-button.cancel {
-  background-color: #FF3300;
-  border-bottom: 1px solid #FF3300;
-}
-button:hover {
-  top: -5px;
-  -webkit-transform: rotateX(20deg);
-  -moz-transform: rotateX(20deg);
-  -ms-transform: rotateX(20deg);
-  transform: rotateX(20deg);
-}
-button:hover.accept {
-  box-shadow: 0px 10px 10px rgba(15, 165, 60, 0.2);
-}
-button:hover.cancel {
-  box-shadow: 0px 10px 10px rgba(255, 0, 0, 0.2);
-}
-button:active {
-  top: 0px;
-  box-shadow: 0px 0px 0px rgba(15, 165, 60, 0);
-}
-button:active.accept {
-  background: #14e085;
-}
-button:active.cancel {
-  background-color: rgba(255, 0, 0, 0.8);
 }
