@@ -7,13 +7,16 @@ class CardsContainer extends React.Component {
             return <div className='noCardsAdded' />;
         }
 
-        return (Object.keys(this.props.itemsObj.items).map(key => (<Card
-            key={key}
-            index={key}
-            listKey={this.props.listKey}
-            updateItem={this.props.updateItem}
-            item={this.props.itemsObj.items[key]} />
-        )));
+        return (
+            <div className='cardsContainer'>
+                {Object.keys(this.props.itemsObj.items).map(key => (<Card
+                    key={key}
+                    index={key}
+                    listKey={this.props.listKey}
+                    updateItem={this.props.updateItem}
+                    item={this.props.itemsObj.items[key]} />
+                ))}
+            </div>);
     }
 }
 

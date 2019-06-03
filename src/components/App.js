@@ -124,16 +124,19 @@ class App extends React.Component {
     render() {
         return (
             <Fragment>
-                <Header />
-                <ListControls addList={this.addList}/>
-                <div id='content' className='colsView'>
-                    <ColumnsContainer
-                        lists={this.state.firebaseLists.lists}
-                        removeList={this.removeList}
-                        updateTitle={this.updateTitle}
-                        addItem={this.addItem}
-                        updateItem={this.updateItem} />
-                    <div className='clearer' />
+                <div id='content'>
+                    <Header />
+                    <ListControls addList={this.addList}/>
+                    <div id='board-container'>
+                        <div id='board' className='colsView'>
+                            <ColumnsContainer
+                                lists={this.state.firebaseLists.lists}
+                                removeList={this.removeList}
+                                updateTitle={this.updateTitle}
+                                addItem={this.addItem}
+                                updateItem={this.updateItem} />
+                        </div>
+                    </div>
                 </div>
             </Fragment>
         );

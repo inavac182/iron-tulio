@@ -1,0 +1,50 @@
+.listContainer {
+    width: 100%;
+    background-color: #F5F5F5;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0px 0px 2px #E0E0E0;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    .listHeader {
+        flex: 0 0 auto;
+        height: 35px;
+    }
+
+    .cardsContainer {
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 70%;
+    }
+
+    .inputTitle {
+        width: 210px;
+        background-color: transparent;
+        border-radius: 5px;
+        border: 3px solid #F5F5F5;
+        cursor: pointer;
+        font-size: 1.2em;
+        padding: 3px;
+        font-family: 'Roboto Condensed', sans-serif;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        resize: none;
+        float: left;
+
+        &:focus {
+            background-color: #ffffff;
+            border: 3px solid #0066CC;
+            border-radius: 5px;
+            box-shadow: inset 0px 0px 5px #E0E0E0;
+        }
+    }
+
+    .removeList {
+        float: right;
+        width: 30px;
+        height: 30px;
+        border-radius: 20px;
+    }
+}

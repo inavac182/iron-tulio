@@ -45,11 +45,25 @@ header {
 @import url('inputs.less');
 
 #main {
-    max-width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
+
 #content {
-    margin-top: 20px;
-    overflow-y: scroll;
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    outline: none;
+}
+
+#board-container {
+    position: relative;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 .clearer {
@@ -63,4 +77,5 @@ header {
 @import url('cards.less');
 @import url('skeletons.less');
 @import url('listControls.less');
+@import url('lists.less');
 

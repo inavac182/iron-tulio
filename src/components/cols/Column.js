@@ -19,32 +19,34 @@ class List extends React.Component {
 
     render() {
         return (
-            <div className='list'>
-                <ContentEditable
-                    className='inputTitle'
-                    innerRef={this.contentEditable}
-                    html={this.props.list.title}
-                    disabled={false}
-                    onKeyDown={this.onKeyPressed}
-                    onChange={value => this.props.updateTitle(this.props.index, value)}
-                    tagName='article' />
+            <div className='column'>
+                <div className='listContainer'>
+                    <div className='listHeader'>
+                        <ContentEditable
+                            className='inputTitle'
+                            innerRef={this.contentEditable}
+                            html={this.props.list.title}
+                            disabled={false}
+                            onKeyDown={this.onKeyPressed}
+                            onChange={value => this.props.updateTitle(this.props.index, value)}
+                            tagName='article' />
 
-                <button className='cancel removeList' type='button'
-                    onClick={() => this.props.removeList(this.props.index)} >
-                    <FontAwesomeIcon icon={faTrashAlt} className='icon' />
-                </button>
+                        <button className='cancel removeList' type='button'
+                            onClick={() => this.props.removeList(this.props.index)} >
+                            <FontAwesomeIcon icon={faTrashAlt} className='icon' />
+                        </button>
+                    </div>
 
-                <div className='clearer' />
+                    <CardsContainer
+                        listKey={this.props.index}
+                        itemsObj={this.props.list.itemsObj}
+                        updateItem={this.props.updateItem} />
 
-                <CardsContainer
-                    listKey={this.props.index}
-                    itemsObj={this.props.list.itemsObj}
-                    updateItem={this.props.updateItem} />
-
-                <NewItem
-                    listIndex={this.props.index}
-                    addItem={this.props.addItem}
-                />
+                    <NewItem
+                        listIndex={this.props.index}
+                        addItem={this.props.addItem}
+                    />
+                </div>
             </div>
         );
     }
