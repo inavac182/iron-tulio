@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 class NewItem extends React.Component {
-    state = {
-        title: ''
-    }
-
     constructor(props) {
         super(props);
+        this.state = {
+            title: ''
+        };
+        this.baseState = this.state;
         this.contentEditable = React.createRef();
     }
 
@@ -18,9 +18,14 @@ class NewItem extends React.Component {
         }
     }
 
+    resetState = () => {
+        this.setState(this.baseState);
+    }
+
     onSubmitForm = e => {
         e.preventDefault();
         this.props.addItem(this.state.title, this.props.listIndex);
+        this.resetState();
     }
 
     updateTitle = input => {
@@ -33,7 +38,7 @@ class NewItem extends React.Component {
                 <input
                     type='text'
                     placeholder='New card title'
-                    defaultValue={this.state.title}
+                    value={this.state.title}
                     onChange={this.updateTitle}
                     required />
                 <button type='submit' className='accept'>

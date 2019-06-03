@@ -1,15 +1,37 @@
 import React, { Fragment } from 'react';
 import ColumnsContainer from './cols/ColumnsContainer';
 import Header from './Header';
+import Page from './Page';
+import Logout from './Logout';
 import ListControls from './lists/ListControls';
-import base from '../base';
+import base, { firebaseApp } from '../base';
 
 class App extends React.Component {
-    state = {
-        firebaseLists: {
-            lists: {},
-            counter: 0
+    constructor (props) {
+        super(props); 
+        this.state = {
+            firebaseLists: {
+                lists: {},
+                counter: 0
+            },
+            user: {}
         }
+    }
+
+    authListener () {
+        firebaseApp.auth().onAuthStateChanged((user) => {
+            console.log(user);
+
+            if (user) {
+                this.setState({
+                    user: user
+                });
+            } else {
+                this.setState({
+                    user: null
+                });
+            }
+        });
     }
 
     addList = listTitle => {
@@ -98,6 +120,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        this.authListener();
         this.ref = base.syncState('firebaseLists', {
             context: this,
             state: 'firebaseLists'
@@ -123,23 +146,27 @@ class App extends React.Component {
 
     render() {
         return (
-            <Fragment>
-                <div id='content'>
-                    <Header />
-                    <ListControls addList={this.addList}/>
-                    <div id='board-container'>
-                        <div id='board' className='colsView'>
-                            <ColumnsContainer
-                                lists={this.state.firebaseLists.lists}
-                                removeList={this.removeList}
-                                updateTitle={this.updateTitle}
-                                addItem={this.addItem}
-                                updateItem={this.updateItem} />
+            <div id='content'>
+            <Header />
+                { this.state.user ? (
+                    <Fragment>
+                        <Logout />
+                        <ListControls addList={this.addList} />
+                        <div id='board-container'>
+                            <div id='board' className='colsView'>
+                                <ColumnsContainer
+                                    lists={this.state.firebaseLists.lists}
+                                    removeList={this.removeList}
+                                    updateTitle={this.updateTitle}
+                                    addItem={this.addItem}
+                                    updateItem={this.updateItem} />
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </Fragment>
-        );
+                    </Fragment>
+                    ) :  (<Page />) 
+                }
+            </div>
+        )
     }
 }
 
