@@ -41,7 +41,6 @@
   "bugs": {
     "url": "https://github.com/inavac182/iron-tulio/issues"
   },
-  "homepage": "https://github.com/inavac182/iron-tulio#readme",
   "browserslist": [
     ">0.2%",
     "not dead",
