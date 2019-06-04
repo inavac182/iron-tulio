@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import ColumnsContainer from './cols/ColumnsContainer';
 import Header from './Header';
 import Page from './Page';
-import Logout from './Logout';
 import ListControls from './lists/ListControls';
 import base, { firebaseApp } from '../base';
 

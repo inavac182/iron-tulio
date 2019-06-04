@@ -35,9 +35,9 @@ class Page extends React.Component {
     render() {
         return (
                <form id='login'>
-                  <h1>No logged In</h1>
-                    <div>
-                        <label htmlFor='userEmail'> Email address</label>
+                  <h1>Please sign in or sign up</h1>
+                    <div className='emailContainer'>
+                        <label htmlFor='userEmail' className='visuallyHidden'> Email address</label>
                         <input value={this.state.email} 
                             onChange={this.handleChange} 
                             type='email' 
@@ -48,8 +48,8 @@ class Page extends React.Component {
                       autoComplete='current-user'/>
                         <small id='emailHelp'>We'll never share your email with anyone else.</small>
                     </div>
-                    <div>
-                        <label htmlFor='userPassword'> Password</label>
+                    <div className='passContainer'>
+                        <label htmlFor='userPassword' className='visuallyHidden'> Password</label>
                         <input value={this.state.password} 
                             onChange={this.handleChange} 
                             type='password' 
@@ -58,13 +58,16 @@ class Page extends React.Component {
                             placeholder='Password' 
                       autoComplete='current-password'/>
                     </div>
-                    <div>
+                    <div className='actionButtons'>
                         <button 
                             type='submit' 
+                            className='accept'
                             onClick={this.login}>
                             Login
                         </button>
-                        <button onClick={this.signUp}>
+                        <button 
+                            onClick={this.signUp}
+                            className='warning'>
                             Sign up
                         </button>
                     </div>
