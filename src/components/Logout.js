@@ -17,7 +17,7 @@ class Page extends React.Component {
     }
 
     render() {
-        return <button onClick={this.logout} style={{width:'100px'}}>Log out </button>
+        return <button onClick={this.logout} style={{width:'100px'}} className='cancel'>Log out </button>
     }
 }
 

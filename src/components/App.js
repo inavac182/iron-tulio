@@ -150,7 +150,6 @@ class App extends React.Component {
             <Header />
                 { this.state.user ? (
                     <Fragment>
-                        <Logout />
                         <ListControls addList={this.addList} />
                         <div id='board-container'>
                             <div id='board' className='colsView'>

@@ -31,24 +31,26 @@ class NewList extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.addList} className='addListForm'>
-                <input
-                    className='title'
-                    type='text'
-                    placeholder='New list title'
-                    value={this.state.newTitle}
-                    onChange={input => this.updateTitle(input)}
-                    required/>
-                <div className='buttonCtrl'>
-                    <button className='accept' type='submit'>
-                        <FontAwesomeIcon icon={faPlus} className='icon' />
-                    </button>
-                    <button className='cancel' type='button' onClick={this.resetState}>
-                        <FontAwesomeIcon icon={faTrashAlt} className='icon' />
-                    </button>
-                    <div className='clearer' />
-                </div>
-            </form>
+            <div className='addListForm'>
+                <form onSubmit={this.addList}>
+                    <input
+                        className='title'
+                        type='text'
+                        placeholder='New list title'
+                        value={this.state.newTitle}
+                        onChange={input => this.updateTitle(input)}
+                        required/>
+                    <div className='buttonCtrl'>
+                        <button className='accept' type='submit'>
+                            <FontAwesomeIcon icon={faPlus} className='icon' />
+                        </button>
+                        <button className='cancel' type='button' onClick={this.resetState}>
+                            <FontAwesomeIcon icon={faTrashAlt} className='icon' />
+                        </button>
+                        <div className='clearer' />
+                    </div>
+                </form>
+            </div>
         );
     }
 }

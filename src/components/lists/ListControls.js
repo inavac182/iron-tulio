@@ -6,9 +6,11 @@ class ListControls extends React.Component {
     render() {
         return (
             <section id='controls'>
-                <NewList addList={this.props.addList} />
-                <FilterList />
-                <div className='clearer' />
+            	<div id='controlsContainer'>
+	                <NewList addList={this.props.addList} />
+	                <FilterList />
+	                <div className='clearer' />
+                </div>
             </section>
         );
     }

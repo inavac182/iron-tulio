@@ -1,8 +1,13 @@
 #controls {
-    width: 590px;
+    width: 100%;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+#controlsContainer {
+    width: 100%;
+    margin: 0 auto;
 }
 
 .addListForm {
@@ -13,7 +18,6 @@
     box-shadow: inset 0px 0px 5px #E0E0E0;
     padding: 5px;
     margin: 0 auto;
-    float: left;
 
     .icon {
         display: inline-block;
@@ -61,8 +65,7 @@
     box-shadow: inset 0px 0px 5px #E0E0E0;
     padding: 5px;
     margin: 0 auto;
-    float: left;
-    margin-left: 20px;
+    margin-top: 20px;
 
     .selectedFilter {
         width: 90%;
@@ -89,3 +92,21 @@
         display: none;
     }
 }
+
+@media only screen and (min-width: 590px) {
+  #controlsContainer {
+        width: 580px;
+        margin: 0 auto;
+    }
+
+    .addListForm {
+        float: left;
+    }
+
+    #filterLists {
+        float: left;
+        margin-left: 20px;
+        margin-top: 0;
+    }
+}
+
