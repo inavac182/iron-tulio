@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Header';
 import { firebaseApp } from '../base';
 
 class Page extends React.Component {

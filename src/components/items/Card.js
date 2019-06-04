@@ -33,8 +33,8 @@ class Card extends React.Component {
                 </div>
                 <div className='main'>
                     <Labels />
-                    <div className='title'>
-                        <p>{this.props.item.title}</p>
+                    <div className='title wordwrap'>
+                        {this.props.item.title}
                     </div>
                     <AssignedView />
                 </div>
