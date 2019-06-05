@@ -8,7 +8,7 @@ class Header extends React.Component {
             <header>
                 <div className='logoContainer'>
                     <img src={icon} alt='Icon' className='icon'/>
-                    <h2 className='title'> IronTul.io</h2>
+                    <h2 className='title'> IronTulio</h2>
                 </div>
                 <div className='logOutContainer'>
                     <Logout />
