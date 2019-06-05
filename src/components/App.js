@@ -7,23 +7,24 @@ import base, { firebaseApp } from '../base';
 
 class App extends React.Component {
     constructor (props) {
-        super(props); 
+        super(props);
         this.state = {
-            firebaseLists: {
-                lists: {},
-                counter: 0
-            },
-            user: {}
+            board: {},
+            user: null,
+            board: {}
         }
     }
 
     authListener () {
         firebaseApp.auth().onAuthStateChanged((user) => {
-            console.log(user);
-
             if (user) {
                 this.setState({
                     user: user
+                });
+
+                this.ref = base.syncState(this.state.user.uid, {
+                    context: this,
+                    state: 'board'
                 });
             } else {
                 this.setState({
@@ -120,10 +121,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.authListener();
-        this.ref = base.syncState('firebaseLists', {
-            context: this,
-            state: 'firebaseLists'
-        });
     }
 
     updateItem = (item, itemKey, listKey) => {
@@ -161,7 +158,7 @@ class App extends React.Component {
                             </div>
                         </div>
                     </Fragment>
-                    ) :  (<Page />) 
+                    ) :  (<Page />)
                 }
             </div>
         )
