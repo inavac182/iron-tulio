@@ -2,9 +2,9 @@ import React from 'react';
 import AssignedView from './AssignedView';
 import Labels from './Labels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faSquare, 
-    faCheckSquare, 
+import {
+    faSquare,
+    faCheckSquare,
     faUndoAlt
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -67,9 +67,9 @@ class Card extends React.Component {
         return (
             <div className={`item status-${this.props.item.status}`}>
                 <div className='actionButton'>
-                    <button 
-                        className='accept checkbox' 
-                        onMouseEnter={this.mouseEnter} 
+                    <button
+                        className='accept checkbox'
+                        onMouseEnter={this.mouseEnter}
                         onMouseLeave={this.mouseLeave}
                         onClick={this.toggleStatus}>
                             <FontAwesomeIcon icon={this.state.iconRendered} className='icon fa-xs' />

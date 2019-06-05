@@ -62,7 +62,8 @@ header {
 #board-container {
     position: relative;
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: hidden;
+    overflow-x: auto;
 }
 
 #board-container::-webkit-scrollbar {
@@ -122,7 +123,7 @@ header {
     opacity: 0;
 }
 
-@import url('colsView.less');
+@import url('board.less');
 @import url('cards.less');
 @import url('skeletons.less');
 @import url('listControls.less');
