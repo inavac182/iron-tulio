@@ -12,11 +12,8 @@ class ColumnsContainer extends React.Component {
         this.onDrop = this.onDrop.bind(this);
     }
 
-    onDrop(item) {
-        console.log('onDrop: ', item);
-        this.setState({
-            droppedItem: item
-        });
+    onDrop(item, droppedInList) {
+        this.props.moveCardToList(item, droppedInList);
     }
 
     render() {

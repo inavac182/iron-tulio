@@ -2,13 +2,14 @@ import React, { Fragment } from 'react';
 import ColumnsContainer from './cols/ColumnsContainer';
 import ListControls from './lists/ListControls';
 import base from '../base';
+import uniqid from 'uniqid';
 
 class Board extends React.Component {
     constructor (props) {
         super(props);
 
         this.state = {
-            board: {}
+            board: ''
         }
     }
 
@@ -19,21 +20,14 @@ class Board extends React.Component {
             return;
         }
 
-        if (Object.keys(state).length === 0) {
-            state.counter = 1;
-        } else {
-            state.counter = state.counter + 1;
-        }
-
         if (!state.lists) {
             state.lists = {};
         }
 
-        state.lists[state.counter] = {
+        state.lists[uniqid('list-')] = {
             title: listTitle,
-            itemsObj: {
-                counter: 0
-            }
+            id: uniqid('list-'),
+            itemsObj: {}
         };
 
         this.setState({ board: state });
@@ -61,6 +55,7 @@ class Board extends React.Component {
         let lists = this.state.board.lists;
         let list = lists[listKey];
         let itemsObj = { ...list.itemsObj };
+        const cardKey = uniqid('card-');
 
         if (!itemTitle) {
             console.error('Can not create an item without title');
@@ -72,16 +67,16 @@ class Board extends React.Component {
             return;
         }
 
-        if (itemsObj.counter === 0) {
+        if (!itemsObj.items) {
             itemsObj.items = {};
         }
 
-        itemsObj.counter = itemsObj.counter + 1;
-
-        itemsObj.items[itemsObj.counter] = {
+        itemsObj.items[cardKey] = {
             title: itemTitle,
+            listKey: listKey,
+            cardKey: cardKey,
             status: 1,
-            descript: '',
+            description: '',
             assignedPeople: {},
             owner: this.props.uid,
             labels: {}
@@ -114,6 +109,33 @@ class Board extends React.Component {
         });
     }
 
+    moveCardToList = (card, newListKey) => {
+        if (card.listKey === newListKey) {
+            console.log('Same list');
+            return;
+        }
+
+        let board = { ...this.state.board };
+        const newListObj = board.lists[newListKey];
+
+        if (!newListObj.itemsObj) {
+            newListObj.itemsObj = {
+                items: {}
+            };
+        }
+
+        newListObj.itemsObj.items[card.cardKey] = card;
+
+        const prevListObj = board.lists[card.listKey];
+        prevListObj.itemsObj.items[card.cardKey] = null;
+        board.lists[card.listKey] = prevListObj;
+
+        newListObj.itemsObj.items[card.cardKey].listKey = newListKey;
+        board.lists[newListKey] = newListObj;
+
+        this.setState({ board })
+    }
+
     componentDidMount () {
         this.ref = base.syncState(`board-${this.props.uid}`, {
             context: this,
@@ -122,6 +144,10 @@ class Board extends React.Component {
     }
 
     render() {
+        if (this.state.board === '') {
+            return (<h1>Loading Board...</h1>);
+        }
+
         return (
             <Fragment>
                 <ListControls addList={this.addList} />
@@ -132,6 +158,7 @@ class Board extends React.Component {
                             removeList={this.removeList}
                             updateTitle={this.updateTitle}
                             addItem={this.addItem}
+                            moveCardToList={this.moveCardToList}
                             updateItem={this.updateItem} />
                     </div>
                 </div>

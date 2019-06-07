@@ -21,44 +21,44 @@ class CardsContainer extends React.Component {
         }
     }
 
+    getCards () {
+        if (this.props.itemsObj && this.props.itemsObj.items) {
+            return Object.keys(this.props.itemsObj.items).map(key => (
+                <Card
+                    key={key}
+                    index={key}
+                    listKey={this.props.listKey}
+                    updateItem={this.props.updateItem}
+                    item={this.props.itemsObj.items[key]} />
+                )
+            )
+        }
+    }
+
     render() {
-        const { isOver, canDrop, connectDropTarget, droppedItem } = this.props;
+        const { isOver, connectDropTarget } = this.props;
         let classes = "cardsContainer";
 
         if (isOver) {
             classes = `cardHover ${classes}`;
         }
 
-        if (!this.props.itemsObj.items) {
+        if (!this.props.itemsObj) {
             classes = `noCardsAdded ${classes}`;
         }
 
         return connectDropTarget(
             <div id={this.state.listId} className={classes}>
-                {getCards(this.props)}
+                {this.getCards()}
             </div>
         );
-    }
-}
-
-const getCards = (props) => {
-    if (props.itemsObj && props.itemsObj.items) {
-        return Object.keys(props.itemsObj.items).map(key => (
-            <Card
-                key={key}
-                index={key}
-                listKey={props.listKey}
-                updateItem={props.updateItem}
-                item={props.itemsObj.items[key]} />
-            )
-        )
     }
 }
 
 const spec = {
     drop(props, monitor, component) {
         const item = monitor.getItem();
-        props.onDrop(item);
+        props.onDrop(item, props.listKey);
     }
 };
 

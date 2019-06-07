@@ -9,17 +9,22 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            user: null
+            user: null,
+            verified: false
         }
     }
 
     authListener () {
         firebaseApp.auth().onAuthStateChanged((user) => {
             if (user) {
-                this.setState({ user });
+                this.setState({
+                    user: user,
+                    verified: true
+                });
             } else {
                 this.setState({
-                    user: null
+                    user: null,
+                    verified: true
                 });
             }
         });
@@ -31,6 +36,10 @@ class App extends React.Component {
 
 
     render() {
+        if (!this.state.verified) {
+            return (<h1>Loading App..</h1>);
+        }
+
         return (
             <div id='content'>
             <Header />

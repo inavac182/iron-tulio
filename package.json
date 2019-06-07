@@ -25,7 +25,8 @@
     "react-dnd-html5-backend": "^7.4.4",
     "react-dom": "^16.8.6",
     "react-router-dom": "^4.3.1",
-    "react-transition-group": "^2.5.3"
+    "react-transition-group": "^2.5.3",
+    "uniqid": "^5.0.3"
   },
   "devDependencies": {
     "ajv": "^6.10.0",

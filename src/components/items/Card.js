@@ -99,8 +99,7 @@ function collect(connect, monitor) {
 
 const cardSource = {
     beginDrag(props, monitor, component) {
-        const item = { id: props.item };
-        return item;
+        return props.item;
     }
 };
 
