@@ -7,6 +7,7 @@ import {
     faCheckSquare,
     faUndoAlt
 } from '@fortawesome/free-solid-svg-icons';
+import { DragSource } from "react-dnd";
 
 class Card extends React.Component {
     constructor (props) {
@@ -64,7 +65,9 @@ class Card extends React.Component {
     }
 
     render() {
-        return (
+        const { connectDragSource } = this.props;
+
+        return connectDragSource(
             <div className={`item status-${this.props.item.status}`}>
                 <div className='actionButton'>
                     <button
@@ -88,4 +91,18 @@ class Card extends React.Component {
     }
 }
 
-export default Card;
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource()
+    };
+}
+
+const cardSource = {
+    beginDrag(props, monitor, component) {
+        const item = { id: props.item };
+        return item;
+    }
+};
+
+
+export default DragSource("SOURCE", cardSource, collect)(Card);

@@ -1,7 +1,24 @@
 import React from 'react';
 import Column from './Column';
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 class ColumnsContainer extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            droppedItem: {},
+        };
+        this.onDrop = this.onDrop.bind(this);
+    }
+
+    onDrop(item) {
+        console.log('onDrop: ', item);
+        this.setState({
+            droppedItem: item
+        });
+    }
+
     render() {
         if (!this.props.lists) {
             return <div id='emptyLists'><p>No lists created yet</p></div>;
@@ -15,9 +32,12 @@ class ColumnsContainer extends React.Component {
             removeList={this.props.removeList}
             updateTitle={this.props.updateTitle}
             updateItem={this.props.updateItem}
-            addItem={this.props.addItem} />
+            addItem={this.props.addItem}
+            droppedItem={this.state.droppedItem}
+            onDrop={this.onDrop} />
         ));
     }
 }
 
-export default ColumnsContainer;
+const ContainerWrapper = DragDropContext(HTML5Backend)(ColumnsContainer);
+export default ContainerWrapper;

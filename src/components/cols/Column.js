@@ -40,7 +40,9 @@ class List extends React.Component {
                     <CardsContainer
                         listKey={this.props.index}
                         itemsObj={this.props.list.itemsObj}
-                        updateItem={this.props.updateItem} />
+                        updateItem={this.props.updateItem}
+                        droppedItem={this.props.droppedItem}
+                        onDrop={this.props.onDrop} />
 
                     <NewItem
                         listIndex={this.props.index}

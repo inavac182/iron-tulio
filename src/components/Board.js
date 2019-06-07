@@ -83,7 +83,7 @@ class Board extends React.Component {
             status: 1,
             descript: '',
             assignedPeople: {},
-            owner: 1,
+            owner: this.props.uid,
             labels: {}
         };
 
