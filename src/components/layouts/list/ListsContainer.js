@@ -1,19 +1,14 @@
 import React from 'react';
-import Column from './Column';
+import List from './List';
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
-class ColumnsContainer extends React.Component {
+class ListsContainer extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
             droppedItem: {},
         };
-        this.onDrop = this.onDrop.bind(this);
-    }
-
-    onDrop(item, droppedInList) {
-        this.props.moveCardToList(item, droppedInList);
     }
 
     render() {
@@ -21,7 +16,7 @@ class ColumnsContainer extends React.Component {
             return <div id='emptyLists'><p>No lists created yet</p></div>;
         }
 
-        return Object.keys(this.props.lists).map(key => (<Column
+        return Object.keys(this.props.lists).map(key => (<List
             key={key}
             index={key}
             listKey={this.props.listKey}
@@ -31,10 +26,12 @@ class ColumnsContainer extends React.Component {
             updateItem={this.props.updateItem}
             addItem={this.props.addItem}
             droppedItem={this.state.droppedItem}
-            onDrop={this.onDrop} />
+            moveItem={this.props.moveItem}
+            setDraggingInfo={this.props.setDraggingInfo}
+            draggingInfo={this.props.draggingInfo} />
         ));
     }
 }
 
-const ContainerWrapper = DragDropContext(HTML5Backend)(ColumnsContainer);
+const ContainerWrapper = DragDropContext(HTML5Backend)(ListsContainer);
 export default ContainerWrapper;

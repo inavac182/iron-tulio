@@ -1,8 +1,8 @@
 import React from 'react';
-import Page from './Page';
-import Board from './Board';
-import Header from './Header';
+import Board from './layouts/Board';
+import Header from './common/Header';
 import { firebaseApp } from '../base';
+let authListener;
 
 class App extends React.Component {
     constructor (props) {
@@ -10,40 +10,53 @@ class App extends React.Component {
 
         this.state = {
             user: null,
-            verified: false
+            loaded: false,
+            theme: 'purple'
         }
     }
 
-    authListener () {
-        firebaseApp.auth().onAuthStateChanged((user) => {
+    checkUser = () => {
+        authListener = firebaseApp.auth().onAuthStateChanged(user => {
             if (user) {
+                if (!user.emailVerified) {
+                    this.props.history.push("/checkEmail");
+                    return;
+                }
+
+                const userData = {
+                    name: user.displayName,
+                    email: user.email,
+                    photoUrl: user.photoURL,
+                    uid: user.uid
+                }
+
                 this.setState({
-                    user: user,
-                    verified: true
+                    user: userData,
+                    loaded: true
                 });
             } else {
-                this.setState({
-                    user: null,
-                    verified: true
-                });
+                this.props.history.push("/login");
             }
         });
-    }
+    };
 
     componentDidMount() {
-        this.authListener();
+        this.checkUser();
     }
 
+    componentWillUnmount() {
+        authListener();
+    }
 
     render() {
-        if (!this.state.verified) {
+        if (!this.state.loaded) {
             return (<h1>Loading App..</h1>);
         }
 
         return (
-            <div id='content'>
-            <Header />
-                { this.state.user ? (<Board uid={this.state.user.uid}/>) :  (<Page />) }
+            <div id='content' className={this.state.theme}>
+                <Header />
+                <Board uid={this.state.user.uid} boardId='initial-board'/>
             </div>
         )
     }

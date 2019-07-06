@@ -1,12 +1,14 @@
+.card {
+    cursor: pointer;
+}
 
-.item {
+.cardContent {
     background-color: #ffffff;
-    border-radius: 2px;
-    width: 256px;
+    border-radius: 5px;
+    width: 255px;
     min-height: 50px;
     border: 1px solid #E0E0E0;
     position: relative;
-    margin-top: 10px;
     -moz-transition: min-height 1s ease;
     -webkit-transition: min-height 1s ease;
     -o-transition: min-height 1s ease;
@@ -80,5 +82,37 @@
             text-decoration: line-through;
             margin-top: 4px;
         }
+    }
+}
+
+.childDragging {
+    cursor: move;
+
+    .cardContent {
+        display: none;
+    }
+}
+
+.droppableArea {
+    width: 255px;
+    min-height: 10px;
+
+    .dropPlaceHolder {
+        display: none;
+    }
+
+    &.isHover {
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        .dropPlaceHolder {
+            display: block;
+            background-color: #D0D0D0;
+            border-radius: 10px;
+        }
+    }
+
+    &.isSelf.droppableArea {
+        display: none;
     }
 }

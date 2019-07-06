@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import ContentEditable from 'react-contenteditable';
-import NewItem from '../items/NewItem';
+import NewCard from './NewCard';
 import CardsContainer from './CardsContainer';
 
 class List extends React.Component {
@@ -39,12 +39,14 @@ class List extends React.Component {
 
                     <CardsContainer
                         listKey={this.props.index}
-                        itemsObj={this.props.list.itemsObj}
+                        items={this.props.list.items}
                         updateItem={this.props.updateItem}
                         droppedItem={this.props.droppedItem}
-                        onDrop={this.props.onDrop} />
+                        moveItem={this.props.moveItem}
+                        setDraggingInfo={this.props.setDraggingInfo}
+                        draggingInfo={this.props.draggingInfo} />
 
-                    <NewItem
+                    <NewCard
                         listIndex={this.props.index}
                         addItem={this.props.addItem}
                     />

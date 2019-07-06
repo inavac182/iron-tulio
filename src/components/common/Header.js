@@ -1,6 +1,6 @@
 import React from 'react';
-import icon from '../img/icon.png';
-import Logout from './Logout';
+import icon from '../../img/icon.png';
+import Logout from '../Logout';
 
 class Header extends React.Component {
     render() {

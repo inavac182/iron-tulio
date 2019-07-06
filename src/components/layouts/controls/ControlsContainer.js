@@ -1,14 +1,14 @@
 import React from 'react';
 import NewList from './NewList';
-import FilterList from './FilterList';
+import FilterLists from './FilterLists';
 
-class ListControls extends React.Component {
+class ControlsContainer extends React.Component {
     render() {
         return (
             <section id='controls'>
             	<div id='controlsContainer'>
 	                <NewList addList={this.props.addList} />
-	                <FilterList />
+	                <FilterLists />
 	                <div className='clearer' />
                 </div>
             </section>
@@ -16,4 +16,4 @@ class ListControls extends React.Component {
     }
 }
 
-export default ListControls;
+export default ControlsContainer;

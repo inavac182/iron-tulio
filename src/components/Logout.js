@@ -1,12 +1,7 @@
 import React from 'react';
 import { firebaseApp } from '../base';
 
-class Page extends React.Component {
-    constructor (props) {
-        super(props);
-        this.logout = this.logout.bind(this);
-    }
-
+class Logout extends React.Component {
     logout (e) {
         e.preventDefault();
         firebaseApp.auth().signOut();
@@ -17,8 +12,12 @@ class Page extends React.Component {
     }
 
     render() {
-        return <button onClick={this.logout} style={{width:'100px'}} className='cancel'>Log out </button>
+        return (
+            <button onClick={this.logout} style={{width:'100px'}} className='cancel'>
+                Log out
+            </button>
+        )
     }
 }
 
-export default Page;
+export default Logout;

@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { DragSource } from "react-dnd";
 
-class Card extends React.Component {
+class CardContent extends React.Component {
     constructor (props) {
         super(props);
 
@@ -22,7 +22,9 @@ class Card extends React.Component {
         this.mouseLeave = this.mouseLeave.bind(this);
         this.state = {
             iconRendered: iconInButton,
-            item: { ...this.props.item }
+            item: { ...this.props.item },
+            classes: null,
+            height: 0
         }
     }
 
@@ -64,28 +66,39 @@ class Card extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const height = this.divElement.clientHeight;
+        this.setState({ height });
+    }
+
     render() {
         const { connectDragSource } = this.props;
 
-        return connectDragSource(
-            <div className={`item status-${this.props.item.status}`}>
-                <div className='actionButton'>
-                    <button
-                        className='accept checkbox'
-                        onMouseEnter={this.mouseEnter}
-                        onMouseLeave={this.mouseLeave}
-                        onClick={this.toggleStatus}>
-                            <FontAwesomeIcon icon={this.state.iconRendered} className='icon fa-xs' />
-                    </button>
-                </div>
-                <div className='main'>
-                    <Labels />
-                    <div className='title wordwrap'>
-                        {this.props.item.title}
+        return (
+            <div className={`status-${this.props.item.status} cardContent`}>
+                {connectDragSource(
+                        <div className='cardContent' ref={ divElement => this.divElement = divElement}>
+                        <div className='actionButton'>
+                            <button
+                                className='accept checkbox'
+                                onMouseEnter={this.mouseEnter}
+                                onMouseLeave={this.mouseLeave}
+                                onClick={this.toggleStatus}>
+                                    <FontAwesomeIcon
+                                        icon={this.state.iconRendered}
+                                        className='icon fa-xs' />
+                            </button>
+                        </div>
+                        <div className='main'>
+                            <Labels />
+                            <div className='title wordwrap'>
+                                {this.props.item.title}
+                            </div>
+                            <AssignedView />
+                        </div>
+                        <div className='clearer' />
                     </div>
-                    <AssignedView />
-                </div>
-                <div className='clearer' />
+                )}
             </div>
         );
     }
@@ -99,9 +112,15 @@ function collect(connect, monitor) {
 
 const cardSource = {
     beginDrag(props, monitor, component) {
+        props.setDraggingInfo({
+            isDragging: true,
+            height: component.state.height
+        });
+
+        setTimeout (props.showPlaceHolder, 100);
         return props.item;
     }
 };
 
 
-export default DragSource("SOURCE", cardSource, collect)(Card);
+export default DragSource("SOURCE", cardSource, collect)(CardContent);
