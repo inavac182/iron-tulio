@@ -70,7 +70,7 @@ class App extends React.Component {
         if (this.state.loading) {
             return <Loader loaded={this.state.loaded} theme={this.props.theme}/>;
         } else {
-            return <BoardsPanel projects={this.state.projects}/>;
+            return <BoardsPanel projects={this.state.projects} user={this.state.user}/>;
         }
     }
 }

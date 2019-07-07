@@ -32,7 +32,7 @@ class BoardsPanel extends React.Component {
     render() {
         return (
             <Fragment>
-                <Header />
+                <Header user={this.props.user}/>
                 <Controls />
                 <div id='user-boards' className='jumbox colored'>
                     {this.renderUserProjects()}
