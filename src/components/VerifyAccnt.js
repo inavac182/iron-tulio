@@ -19,7 +19,7 @@ class VerifyAccnt extends React.Component {
         auth.applyActionCode(attrs.oobCode).then(resp => {
             this.setState({
                 verified: true
-            })
+            });
         }).catch(error => {
             console.log(error);
             this.setState({
@@ -30,17 +30,29 @@ class VerifyAccnt extends React.Component {
 
     componentDidMount () {
         const values = queryString.parse(this.props.location.search)
+
+        if (!values.oobCode) {
+            console.log('Nothing to verify');
+            this.setState({
+                error: 'Nothing to verify'
+            })
+            return;
+        }
+
         this.verifyEmail(values);
     }
 
     render() {
-        const { verified } = this.state;
+        const { verified, error } = this.state;
         let title = '';
 
         if (verified) {
             title = 'Your email has been verified';
         } else {
             title = 'Verifying the email...';
+            if (error) {
+                title = error;
+            }
         }
 
         return (

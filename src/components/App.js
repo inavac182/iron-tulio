@@ -1,8 +1,9 @@
 import React from 'react';
-import Board from './layouts/Board';
-import Header from './common/Header';
+import BoardsPanel from './BoardsPanel';
+import Loader from './Loader';
 import { firebaseApp } from '../base';
 let authListener;
+let observerForProjects;
 
 class App extends React.Component {
     constructor (props) {
@@ -10,10 +11,29 @@ class App extends React.Component {
 
         this.state = {
             user: null,
-            loaded: false,
-            theme: 'purple'
+            projects: null,
+            loading: true
         }
     }
+
+    getBoards = async user => {
+        const db = firebaseApp.firestore();
+        let query = db.collection('projects').where('user', '==', user.uid);
+
+        observerForProjects = await query.onSnapshot(querySnapshot => {
+            console.log('A change');
+            let projects = {};
+
+             querySnapshot.forEach(doc => {
+                projects[doc.id] = doc.data();
+            });
+
+            console.log(projects);
+            this.setState({ user, projects, loading: false});
+        }, err => {
+            console.log(`Encountered error: ${err}`);
+        });
+    };
 
     checkUser = () => {
         authListener = firebaseApp.auth().onAuthStateChanged(user => {
@@ -30,10 +50,7 @@ class App extends React.Component {
                     uid: user.uid
                 }
 
-                this.setState({
-                    user: userData,
-                    loaded: true
-                });
+                this.getBoards(userData);
             } else {
                 this.props.history.push("/login");
             }
@@ -46,19 +63,15 @@ class App extends React.Component {
 
     componentWillUnmount() {
         authListener();
+        observerForProjects();
     }
 
     render() {
-        if (!this.state.loaded) {
-            return (<h1>Loading App..</h1>);
+        if (this.state.loading) {
+            return <Loader loaded={this.state.loaded} theme={this.props.theme}/>;
+        } else {
+            return <BoardsPanel projects={this.state.projects}/>;
         }
-
-        return (
-            <div id='content' className={this.state.theme}>
-                <Header />
-                <Board uid={this.state.user.uid} boardId='initial-board'/>
-            </div>
-        )
     }
 }
 

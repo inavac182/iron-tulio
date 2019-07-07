@@ -6,16 +6,24 @@ import Signup from './Signup';
 import CheckEmail from './CheckEmail';
 import VerifyAccnt from './VerifyAccnt';
 
+const theme = 'is-dark';
 const Router = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route exact path='/' component={App} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/signup' component={Signup} />
-            <Route exact path='/checkEmail' component={CheckEmail} />
-            <Route exact path='/verifyAccnt' component={VerifyAccnt} />
-        </Switch>
-    </BrowserRouter>
+    <div id='content' className={theme}>
+        <BrowserRouter>
+            <Switch>
+                <Route
+                    exact
+                    path='/app'
+                    render={(props) => <App {...props} theme={theme} />}
+                />
+
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/signup' component={Signup} />
+                <Route exact path='/checkEmail' component={CheckEmail} />
+                <Route exact path='/verifyAccnt' component={VerifyAccnt} />
+            </Switch>
+        </BrowserRouter>
+    </div>
 );
 
 export default Router;
