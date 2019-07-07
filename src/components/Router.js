@@ -5,6 +5,7 @@ import Login from './Login';
 import Signup from './Signup';
 import CheckEmail from './CheckEmail';
 import VerifyAccnt from './VerifyAccnt';
+import Home from './Home';
 
 const theme = 'is-dark';
 const Router = () => (
@@ -16,7 +17,7 @@ const Router = () => (
                     path='/app'
                     render={(props) => <App {...props} theme={theme} />}
                 />
-
+                <Route exact path='/' component={Home} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={Signup} />
                 <Route exact path='/checkEmail' component={CheckEmail} />
