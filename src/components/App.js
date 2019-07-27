@@ -63,6 +63,11 @@ class App extends React.Component {
 
         if (this.props.match.params.projectId) {
             selectedProject = this.props.match.params.projectId
+        } else if (Object.keys(projects).length > 0) {
+            selectedProject = Object.keys(projects)[0]
+        } else {
+            this.setState({ user, projects, boards: {}, loading: false });
+            return;
         }
 
         let query = db.collection('boards')
