@@ -12,28 +12,11 @@ class App extends React.Component {
         this.state = {
             user: null,
             projects: null,
-            loading: true
+            boards: null,
+            loading: true,
+            selectedProject: ''
         }
     }
-
-    getBoards = async user => {
-        const db = firebaseApp.firestore();
-        let query = db.collection('projects').where('user', '==', user.uid);
-
-        observerForProjects = await query.onSnapshot(querySnapshot => {
-            console.log('A change');
-            let projects = {};
-
-             querySnapshot.forEach(doc => {
-                projects[doc.id] = doc.data();
-            });
-
-            console.log(projects);
-            this.setState({ user, projects, loading: false});
-        }, err => {
-            console.log(`Encountered error: ${err}`);
-        });
-    };
 
     checkUser = () => {
         authListener = firebaseApp.auth().onAuthStateChanged(user => {
@@ -50,12 +33,65 @@ class App extends React.Component {
                     uid: user.uid
                 }
 
-                this.getBoards(userData);
+                this.getProjects(userData);
             } else {
                 this.props.history.push("/login");
             }
         });
     };
+
+    getProjects = async user => {
+        const db = firebaseApp.firestore();
+        let query = db.collection('projects').where('creator', '==', user.uid).orderBy('name');
+
+        observerForProjects = await query.onSnapshot(querySnapshot => {
+            let projects = {};
+
+             querySnapshot.forEach(doc => {
+                projects[doc.id] = doc.data();
+            });
+
+            this.getBoards(user, projects);
+        }, err => {
+            console.log(`Encountered error: ${err}`);
+        });
+    };
+
+    getBoards = async (user, projects) => {
+        const db = firebaseApp.firestore();
+        let selectedProject;
+
+        if (this.props.match.params.projectId) {
+            selectedProject = this.props.match.params.projectId
+        }
+
+        let query = db.collection('boards')
+                        .where('creator', '==', user.uid)
+                        .where('project', '==', selectedProject)
+                        .orderBy('name');
+
+        observerForProjects = await query.onSnapshot(querySnapshot => {
+            let boards = {};
+
+             querySnapshot.forEach(doc => {
+                boards[doc.id] = doc.data();
+            });
+
+            this.setState({ user, projects, boards, loading: false });
+        }, err => {
+            console.log(`Encountered error: ${err}`);
+        });
+    };
+
+    hideLoader = () => {
+        this.setState({
+            loading: false
+        })
+    }
+
+    selectProject = (e) => {
+        console.log(e);
+    }
 
     componentDidMount() {
         this.checkUser();
@@ -63,14 +99,24 @@ class App extends React.Component {
 
     componentWillUnmount() {
         authListener();
-        observerForProjects();
+
+        if (observerForProjects) {
+            observerForProjects();
+        }
     }
 
     render() {
         if (this.state.loading) {
-            return <Loader loaded={this.state.loaded} theme={this.props.theme}/>;
+            return <Loader
+                        loaded={this.state.loading}
+                        theme={this.props.theme}/>;
         } else {
-            return <BoardsPanel projects={this.state.projects} user={this.state.user}/>;
+            return <BoardsPanel
+                        user={this.state.user}
+                        projects={this.state.projects}
+                        boards={this.state.boards}
+                        hideLoader={this.hideLoader}
+                        selectedProject={this.props.match.params.projectId} />
         }
     }
 }

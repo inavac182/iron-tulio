@@ -1,41 +1,62 @@
 import React, { Fragment } from 'react';
 import Header from './common/Header';
-import Controls from './boards/Controls.js'
+import NewBoardForm from './boards/NewBoardForm.js';
+import ProjectsList from './projects/ProjectsList.js';
+import BoardsList from './boards/BoardsList.js';
+import NewProjectForm from './projects/NewProjectForm.js';
+import { firebaseApp } from '../base';
 
 class BoardsPanel extends React.Component {
     constructor (props) {
         super(props);
 
         this.state = {
-            projects: {}
+            projects: {},
+            boards: {}
         }
     }
 
-    componentDidMount () {
-        this.setState({
-            projects: this.props.projects
+    addProject = projectName => {
+        const db = firebaseApp.firestore();
+
+        db.collection('projects').add({
+            name: projectName,
+            creator: this.props.user.uid
         });
     }
 
-    renderUserProjects = () => {
-        return (
-            <ul id='projects-list'>
-                {
-                    Object.keys(this.state.projects).map((k, v) => {
-                        return <li key={k}>{this.state.projects[k].title}</li>
-                    })
-                }
-            </ul>
-        )
+    addBoard = boardName => {
+        const db = firebaseApp.firestore();
+
+        db.collection('boards').add({
+            name: boardName,
+            theme: 'purple',
+            project: this.props.selectedProject,
+            creator: this.props.user.uid
+        });
     }
 
     render() {
+        if (!this.props.user) {
+            return null;
+        }
+
         return (
             <Fragment>
                 <Header user={this.props.user}/>
-                <Controls />
                 <div id='user-boards' className='jumbox colored'>
-                    {this.renderUserProjects()}
+                    <div id='projects-area'>
+                        <NewProjectForm
+                            addProject ={this.addProject} />
+                        <ProjectsList
+                            projects={this.props.projects} />
+                    </div>
+                    <div id='boards-area'>
+                        <NewBoardForm
+                            addBoard ={this.addBoard} />
+                        <BoardsList
+                            boards={this.props.boards} />
+                    </div>
                 </div>
             </Fragment>
         )

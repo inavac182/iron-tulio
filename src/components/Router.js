@@ -12,11 +12,8 @@ const Router = () => (
     <div id='content' className={theme}>
         <BrowserRouter>
             <Switch>
-                <Route
-                    exact
-                    path='/app'
-                    render={(props) => <App {...props} theme={theme} />}
-                />
+                <Route exact path='/app' render={(props) => <App {...props} theme={theme} />}/>
+                <Route exact path='/app/:projectId' render={(props) => <App {...props} theme={theme} />} />
                 <Route exact path='/' component={Home} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={Signup} />

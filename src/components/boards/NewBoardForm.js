@@ -1,16 +1,13 @@
+
 import React from 'react';
 
-class Controls extends React.Component {
+class NewBoardForm extends React.Component {
     constructor (props) {
         super(props);
 
         this.state = {
             boardName: ''
         }
-    }
-
-    componentDidMount () {
-
     }
 
     updateInput = e => {
@@ -21,20 +18,26 @@ class Controls extends React.Component {
 
     addBoard = e => {
         e.preventDefault();
+        const boardName = this.state.boardName;
+
+        this.props.addBoard(boardName);
+        this.setState({
+            boardName: ''
+        });
     }
 
     render() {
         return (
-            <div id='board-controls'>
+            <div className='inline-form'>
                 <form onSubmit={this.addBoard} >
                      <div className='input-row'>
-                        <label htmlFor='board-name'> New board</label>
-                        <input value={this.state.name}
+                        <label htmlFor='board-name' className='visuallyHidden'> New board</label>
+                        <input value={this.state.boardName}
                             onChange={this.updateInput}
                             type='text'
                             name='boardName'
                             id='board-name'
-                            placeholder='e.g. To Do for launch rocket' />
+                            placeholder='New board title' />
                     </div>
                 </form>
             </div>
@@ -42,4 +45,4 @@ class Controls extends React.Component {
     }
 }
 
-export default Controls;
+export default NewBoardForm;

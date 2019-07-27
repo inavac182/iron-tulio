@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import Header from './common/Header';
 
-const theme = 'is-dark';
 const Home = () => (
     <Fragment>
         <Header />
