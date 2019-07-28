@@ -47,7 +47,7 @@ class Signup extends React.Component {
     render() {
         return (
             <div id='content' className={this.state.dark}>
-                <form id='signup' className='jumbox'>
+                <form id='signup' className='jumbox small'>
                     <h1>Create an iron account</h1>
                     <div className='nameContainer'>
                         <label htmlFor='userName'> Name</label>

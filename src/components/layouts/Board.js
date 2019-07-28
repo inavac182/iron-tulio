@@ -1,22 +1,78 @@
 import React, { Fragment } from 'react';
 import ListsContainer from './list/ListsContainer';
 import ControlsContainer from './controls/ControlsContainer';
+import Header from '../common/Header';
 import { firebaseApp } from '../../base';
-import Rebase from 're-base';
+import Loader from '../Loader';
 import uniqid from 'uniqid';
+import { Redirect } from 'react-router-dom';
+let authListener;
+let observerForLists;
 
 class Board extends React.Component {
     constructor (props) {
         super(props);
 
         this.state = {
-            board: '',
+            loading: true,
+            lists: {},
+            user: '',
+            redirect: '',
             dragElement: {
                 height: 0,
                 isDragging: false,
             }
         }
     }
+
+    getLists = async user => {
+        const db = firebaseApp.firestore();
+        const boardId = this.props.match.params.boardId;
+
+        if (!boardId) {
+            console.error('No board ID');
+            return;
+        }
+
+        let query = db.collection('boards').doc(boardId).collection('lists');
+
+        observerForLists = await query.onSnapshot(querySnapshot => {
+            let lists = {};
+
+             querySnapshot.forEach(list => {
+                lists[list.id] = list.data();
+            });
+
+            this.setState({ user, lists, loading: false});
+        }, err => {
+            console.log(`Encountered error: ${err}`);
+        });
+    }
+
+    checkUser = () => {
+        authListener = firebaseApp.auth().onAuthStateChanged(user => {
+            if (user) {
+                if (!user.emailVerified) {
+                    this.props.history.push("/checkEmail");
+                    return;
+                }
+
+                const userData = {
+                    name: user.displayName,
+                    email: user.email,
+                    photoUrl: user.photoURL,
+                    uid: user.uid
+                }
+
+                this.getLists(userData);
+            } else {
+                this.setState({
+                    user: false,
+                    redirect: 'login'
+                })
+            }
+        });
+    };
 
     addList = listTitle => {
         let board = { ...this.state.board };
@@ -218,19 +274,22 @@ class Board extends React.Component {
     }
 
     componentDidMount () {
-       /* const base = Rebase.createClass(firebaseApp.database());
+        this.checkUser();
+    }
 
-        this.ref = base.syncState(`boards/${this.props.boardId}/`, {
-            context: this,
-            state: 'board',
-            queries: {
-                orderByValue: 'index'
-            }
-        });*/
+    componentWillUnmount() {
+        authListener();
+        if (observerForLists) {
+            observerForLists();
+        }
     }
 
     render() {
         let classes = 'colsView';
+
+        if (this.state.redirect !== '') {
+            return <Redirect to='/login' />
+        }
 
         if (this.state.board === '') {
             return (<h1>This is the board :D</h1>);
@@ -239,24 +298,32 @@ class Board extends React.Component {
         if (this.state.dragElement.isDragging) {
             classes = `${classes} isDragging`;
         }
-        return (
-            <Fragment>
-                <ControlsContainer addList={this.addList} />
-                <div id='board-container'>
-                    <div id='board' className={classes}>
-                        <ListsContainer
-                            lists={this.state.board.lists}
-                            removeList={this.removeList}
-                            updateTitle={this.updateTitle}
-                            addItem={this.addItem}
-                            moveItem={this.moveItem}
-                            updateItem={this.updateItem}
-                            setDraggingInfo={this.setDraggingInfo}
-                            draggingInfo={this.state.dragElement} />
+
+        if (this.state.loading) {
+            return <Loader
+                    loaded={this.state.loading}
+                    theme={this.props.theme}/>;
+        } else {
+            return (
+                <Fragment>
+                    <Header user={this.state.user}/>
+                    <ControlsContainer addList={this.addList} />
+                    <div id='board-container'>
+                        <div id='board' className={classes}>
+                            <ListsContainer
+                                lists={this.state.lists}
+                                removeList={this.removeList}
+                                updateTitle={this.updateTitle}
+                                addItem={this.addItem}
+                                moveItem={this.moveItem}
+                                updateItem={this.updateItem}
+                                setDraggingInfo={this.setDraggingInfo}
+                                draggingInfo={this.state.dragElement} />
+                        </div>
                     </div>
-                </div>
-            </Fragment>
-        )
+                </Fragment>
+            )
+        }
     }
 }
 

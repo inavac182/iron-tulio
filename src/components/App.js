@@ -2,19 +2,21 @@ import React from 'react';
 import BoardsPanel from './BoardsPanel';
 import Loader from './Loader';
 import { firebaseApp } from '../base';
-let authListener;
+import { Redirect } from 'react-router-dom';
 let observerForProjects;
+let authListener;
 
 class App extends React.Component {
     constructor (props) {
         super(props);
 
         this.state = {
-            user: null,
+            user: this.props.user,
             projects: null,
             boards: null,
             loading: true,
-            selectedProject: ''
+            selectedProject: '',
+            redirect: ''
         }
     }
 
@@ -35,7 +37,10 @@ class App extends React.Component {
 
                 this.getProjects(userData);
             } else {
-                this.props.history.push("/login");
+                this.setState({
+                    user: false,
+                    redirect: 'login'
+                })
             }
         });
     };
@@ -51,7 +56,7 @@ class App extends React.Component {
                 projects[doc.id] = doc.data();
             });
 
-            this.setState({ user, projects, boards: {}});
+            this.setState({user, projects, boards: {}});
         }, err => {
             console.log(`Encountered error: ${err}`);
         });
@@ -85,13 +90,18 @@ class App extends React.Component {
         })
     }
 
+    componentDidMount () {
+        this.checkUser();
+    }
+
     componentDidUpdate () {
         let selectedProject;
+
         if (this.props.match.params.projectId) {
             selectedProject = this.props.match.params.projectId;
         } else {
             const projects = this.state.projects;
-            selectedProject = Object.keys(projects);
+            selectedProject = Object.keys(projects)[0];
         }
 
         if (selectedProject !== this.state.selectedProject) {
@@ -99,20 +109,19 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount() {
-        console.log('mounted');
-        this.checkUser();
-    }
-
     componentWillUnmount() {
-        authListener();
-
         if (observerForProjects) {
             observerForProjects();
         }
+
+        authListener();
     }
 
     render() {
+        if (this.state.redirect !== '') {
+            return <Redirect to='/login' />
+        }
+
         if (this.state.loading) {
             return <Loader
                         loaded={this.state.loading}

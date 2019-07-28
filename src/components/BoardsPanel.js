@@ -16,6 +16,18 @@ class BoardsPanel extends React.Component {
         }
     }
 
+      getRandomColor() {
+        const min = 1;
+        const max = 8;
+        const rand = Math.floor(min + Math.random() * (max - min));
+        const colors = ['purple', 'orange', 'yellow', 'blue', 'gray', 'green', 'brown', 'red'];
+
+        console.log('rand', rand);
+        console.log('colors', colors);
+        console.log('selected', colors[rand]);
+        return colors[rand];
+    }
+
     addProject = projectName => {
         const db = firebaseApp.firestore();
 
@@ -27,10 +39,11 @@ class BoardsPanel extends React.Component {
 
     addBoard = boardName => {
         const db = firebaseApp.firestore();
+        const color = this.getRandomColor();
 
         db.collection('boards').add({
             name: boardName,
-            theme: 'purple',
+            theme: color,
             project: this.props.selectedProject,
             creator: this.props.user.uid
         });
@@ -44,7 +57,7 @@ class BoardsPanel extends React.Component {
         return (
             <Fragment>
                 <Header user={this.props.user}/>
-                <div id='user-boards' className='jumbox colored'>
+                <div id='user-boards' className='jumbox'>
                     <div id='projects-area'>
                         <NewProjectForm
                             addProject ={this.addProject} />
