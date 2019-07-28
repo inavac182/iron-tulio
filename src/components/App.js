@@ -51,28 +51,19 @@ class App extends React.Component {
                 projects[doc.id] = doc.data();
             });
 
-            this.getBoards(user, projects);
+            this.setState({ user, projects, boards: {}});
         }, err => {
             console.log(`Encountered error: ${err}`);
         });
     };
 
-    getBoards = async (user, projects) => {
+    getBoards = async (projectId) => {
         const db = firebaseApp.firestore();
-        let selectedProject;
-
-        if (this.props.match.params.projectId) {
-            selectedProject = this.props.match.params.projectId
-        } else if (Object.keys(projects).length > 0) {
-            selectedProject = Object.keys(projects)[0]
-        } else {
-            this.setState({ user, projects, boards: {}, loading: false });
-            return;
-        }
+        const user = this.state.user;
 
         let query = db.collection('boards')
                         .where('creator', '==', user.uid)
-                        .where('project', '==', selectedProject)
+                        .where('project', '==', projectId)
                         .orderBy('name');
 
         observerForProjects = await query.onSnapshot(querySnapshot => {
@@ -82,7 +73,7 @@ class App extends React.Component {
                 boards[doc.id] = doc.data();
             });
 
-            this.setState({ user, projects, boards, loading: false });
+            this.setState({ boards, loading: false, selectedProject: projectId });
         }, err => {
             console.log(`Encountered error: ${err}`);
         });
@@ -94,11 +85,22 @@ class App extends React.Component {
         })
     }
 
-    selectProject = (e) => {
-        console.log(e);
+    componentDidUpdate () {
+        let selectedProject;
+        if (this.props.match.params.projectId) {
+            selectedProject = this.props.match.params.projectId;
+        } else {
+            const projects = this.state.projects;
+            selectedProject = Object.keys(projects);
+        }
+
+        if (selectedProject !== this.state.selectedProject) {
+            this.getBoards(selectedProject);
+        }
     }
 
     componentDidMount() {
+        console.log('mounted');
         this.checkUser();
     }
 

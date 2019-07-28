@@ -49,7 +49,8 @@ class BoardsPanel extends React.Component {
                         <NewProjectForm
                             addProject ={this.addProject} />
                         <ProjectsList
-                            projects={this.props.projects} />
+                            projects={this.props.projects}
+                            selectedProject={this.props.selectedProject} />
                     </div>
                     <div id='boards-area'>
                         <NewBoardForm

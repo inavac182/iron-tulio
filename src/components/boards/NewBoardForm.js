@@ -28,7 +28,7 @@ class NewBoardForm extends React.Component {
 
     render() {
         return (
-            <div className='inline-form'>
+            <div className='inline-form new-board-form'>
                 <form onSubmit={this.addBoard} >
                      <div className='input-row'>
                         <label htmlFor='board-name' className='visuallyHidden'> New board</label>

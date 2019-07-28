@@ -218,7 +218,7 @@ class Board extends React.Component {
     }
 
     componentDidMount () {
-        const base = Rebase.createClass(firebaseApp.database());
+       /* const base = Rebase.createClass(firebaseApp.database());
 
         this.ref = base.syncState(`boards/${this.props.boardId}/`, {
             context: this,
@@ -226,14 +226,14 @@ class Board extends React.Component {
             queries: {
                 orderByValue: 'index'
             }
-        });
+        });*/
     }
 
     render() {
         let classes = 'colsView';
 
         if (this.state.board === '') {
-            return (<h1>Loading Board...</h1>);
+            return (<h1>This is the board :D</h1>);
         }
 
         if (this.state.dragElement.isDragging) {

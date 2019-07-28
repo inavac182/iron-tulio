@@ -6,6 +6,7 @@ import Signup from './Signup';
 import CheckEmail from './CheckEmail';
 import VerifyAccnt from './VerifyAccnt';
 import Home from './Home';
+import Board from './layouts/Board';
 
 const theme = 'is-dark';
 const Router = () => (
@@ -14,6 +15,7 @@ const Router = () => (
             <Switch>
                 <Route exact path='/app' render={(props) => <App {...props} theme={theme} />}/>
                 <Route exact path='/app/:projectId' render={(props) => <App {...props} theme={theme} />} />
+                <Route exact path='/board/:projectId' render={(props) => <Board {...props} theme={theme} />} />
                 <Route exact path='/' component={Home} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/signup' component={Signup} />

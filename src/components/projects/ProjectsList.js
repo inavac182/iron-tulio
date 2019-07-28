@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faFolder } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 class ProjectsList extends React.Component {
     render() {
@@ -8,8 +9,14 @@ class ProjectsList extends React.Component {
             <ul id='projects-list'>
                 {
                     Object.keys(this.props.projects).map((k, v) => {
-                        return <li key={k}>
-                                <a href={`/app/${k}`} className='list-link'>
+                        let selected;
+
+                        if (this.props.selectedProject === k) {
+                            selected = 'selected';
+                        }
+
+                        return <li key={k} className={selected}>
+                                <Link to={`/app/${k}`} className='list-link'>
                                     <FontAwesomeIcon
                                             icon={ faFolder }
                                             className='folder-icon fa-xs' />
@@ -19,7 +26,7 @@ class ProjectsList extends React.Component {
                                             icon={ faAngleRight }
                                             className='list-arrow fa-xs' />
                                     </div>
-                                </a>
+                                </Link>
                             </li>
                     })
                 }

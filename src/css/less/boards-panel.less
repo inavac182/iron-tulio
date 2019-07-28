@@ -6,7 +6,7 @@
     align-items: center;
     padding: 0;
 
-    .new-project-container {
+    .new-project-container, .new-board-form {
         width: 100%;
         height: 50px;
     }
@@ -37,9 +37,14 @@
             display: inline-block;
             width: 100%;
 
+            &.selected {
+                background-color: #595959;
+            }
+
             &:first-child {
                 border-top: 1px solid #595959;
             }
+
             &:hover {
                 background-color: #595959;
             }
@@ -70,6 +75,33 @@
                 height: 100%;
                 text-decoration: none;
                 color: white;
+
+            }
+        }
+    }
+
+    #boards-list {
+        width: 100%;
+
+        .no-boards-message {
+            margin: 0 auto;
+            width: 210px;
+        }
+
+        .board-box {
+            width: 200px;
+            height: 80px;
+            padding: 10px;
+            border-radius: 10px;
+            float: left;
+            margin-left: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: gray;
+            display: inline-block;
+
+            &:hover {
+                box-shadow: inset 0px 0px 10px #000;
             }
         }
     }
