@@ -1,117 +1,155 @@
 #user-boards {
-    min-height: 400px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    padding: 0;
-
-    .new-project-container, .new-board-form {
-        width: 100%;
-        height: 50px;
-    }
-
-    #boards-area {
-        width: 70%;
-        height: 100%;
-        padding-left: 20px;
-    }
-
-    #projects-area {
-        width: 30%;
-        height: 100%;
-        border-radius: 5px 0px 0px 5px;
-    }
-
-    #projects-list {
-        width: 100%;
-        display: block;
-
-        li {
-            list-style: none;
-            height: 50px;
-            line-height: 50px;
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            border-radius: 10px;
-            margin-top: 5px;
-
-            &.selected {
-                background-color: #272822;
-            }
-
-            &:hover {
-                background-color: #272822;
-            }
-
-            .folder-icon {
-                margin-right: 10px;
-            }
-
-            .icon-container {
-                right: 0;
-                top: 0;
-                width: 30px;
-                height: 50px;
-                line-height: 50px;
-                position: absolute;
-                text-align: center;
-                padding-top: 15px;
-            }
-
-            .list-arrow {
-                font-size: 18px;
-            }
-
-            .list-link {
-                padding-left: 10px;
-                display: block;
-                width: 100%;
-                height: 100%;
-                text-decoration: none;
-                color: white;
-
-            }
-        }
-    }
-
-    #boards-list {
-        width: 100%;
-
-        .no-boards-message {
-            margin: 0 auto;
-            width: 210px;
-        }
-
-        .board-box {
-            width: 200px;
-            height: 80px;
-            padding: 10px;
-            border-radius: 10px;
-            float: left;
-            margin-left: 10px;
-            margin-top: 10px;
-            text-decoration: none;
-            color: white;
-            background-color: gray;
-            display: inline-block;
-
-            &:hover {
-                box-shadow: inset 0px 0px 10px #000;
-            }
-        }
-    }
+    width: 100%;
+    padding-left: 20px;
 
     .inline-form {
-        margin-top: 10px;
         width: 100%;
-        padding-left: 10px;
 
         input {
-            width: 90%;
-            display: inline-block;
-            margin: 0 auto;
+            width: 100%;
         }
     }
 }
+
+.new-project-container, .new-board-form {
+    width: 100%;
+    height: 50px;
+}
+
+#boards-area {
+    width: 90%;
+    float: left;
+    margin-top: 30px;
+}
+
+#projects-area {
+    width: 90%;
+    float: left;
+
+    li {
+        list-style: none;
+        height: 50px;
+        line-height: 50px;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 5px;
+
+        &.selected {
+            background-color: #272822;
+        }
+
+        &:hover {
+            background-color: #272822;
+        }
+
+        .folder-icon {
+            margin-right: 10px;
+        }
+
+        .icon-container {
+            right: 0;
+            top: 0;
+            width: 30px;
+            height: 50px;
+            line-height: 50px;
+            position: absolute;
+            text-align: center;
+            padding-top: 15px;
+        }
+
+        .list-arrow {
+            font-size: 18px;
+        }
+
+        .list-link {
+            padding-left: 10px;
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: white;
+        }
+    }
+}
+
+#boards-list {
+    width: 100%;
+
+    .no-boards-message {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .board-box {
+        width: 90%;
+        height: 80px;
+        padding: 10px;
+        border-radius: 10px;
+        margin-top: 10px;
+        text-decoration: none;
+        color: white;
+        background-color: gray;
+        display: inline-block;
+
+        &:hover {
+            box-shadow: inset 0px 0px 10px #000;
+        }
+    }
+}
+
+@media (min-width: 550px) {
+    #user-boards {
+        min-height: 400px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        padding: 0;
+
+        #boards-area {
+            width: 70%;
+            height: 100%;
+            padding-left: 20px;
+            margin-top: 0px;
+
+            #boards-list .board-box {
+                width: 200px;
+                height: 80px;
+                padding: 10px;
+                float: left;
+                margin-left: 10px;
+                margin-top: 10px;
+
+                &:hover {
+                    box-shadow: inset 0px 0px 10px #000;
+                }
+            }
+        }
+
+        #projects-area {
+            width: 30%;
+            height: 100%;
+            padding-left: 20px;
+        }
+
+        #projects-list {
+            width: 100%;
+            display: block;
+        }
+
+        .inline-form {
+            margin-top: 10px;
+            width: 100%;
+            padding-left: 10px;
+
+            input {
+                width: 90%;
+                display: inline-block;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+

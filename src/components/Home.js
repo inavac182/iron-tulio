@@ -4,7 +4,7 @@ import Header from './common/Header';
 const Home = () => (
     <Fragment>
         <Header />
-        <div className='jumbox colored'>
+        <div className='jumbox colored small'>
             <div className='title'>
                 <h1>We are building something awesomee!! :v</h1>
             </div>
