@@ -24,7 +24,7 @@ class NewItem extends React.Component {
 
     onSubmitForm = e => {
         e.preventDefault();
-        this.props.addItem(this.state.title, this.props.listIndex);
+        this.props.addCard(this.state.title, this.props.listIndex);
         this.resetState();
     }
 

@@ -25,20 +25,20 @@ class List extends React.Component {
                         <ContentEditable
                             className='inputTitle'
                             innerRef={this.contentEditable}
-                            html={this.props.list.title}
+                            html={this.props.list.name}
                             disabled={false}
                             onKeyDown={this.onKeyPressed}
-                            onChange={value => this.props.updateTitle(this.props.index, value)}
+                            onChange={value => this.props.updateListName(this.props.listId, value)}
                             tagName='article' />
 
                         <button className='cancel removeList' type='button'
-                            onClick={() => this.props.removeList(this.props.index)} >
+                            onClick={() => this.props.removeList(this.props.listId)} >
                             <FontAwesomeIcon icon={faTrashAlt} className='icon' />
                         </button>
                     </div>
 
                     <CardsContainer
-                        listKey={this.props.index}
+                        listKey={this.props.listId}
                         items={this.props.list.items}
                         updateItem={this.props.updateItem}
                         droppedItem={this.props.droppedItem}
@@ -48,7 +48,7 @@ class List extends React.Component {
 
                     <NewCard
                         listIndex={this.props.index}
-                        addItem={this.props.addItem}
+                        addCard={this.props.addCard}
                     />
                 </div>
             </div>

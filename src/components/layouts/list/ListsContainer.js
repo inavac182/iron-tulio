@@ -18,11 +18,11 @@ class ListsContainer extends React.Component {
 
         return Object.keys(this.props.lists).map(key => (<List
             key={key}
-            index={key}
+            listId={key}
             listKey={this.props.listKey}
             list={this.props.lists[key]}
             removeList={this.props.removeList}
-            updateTitle={this.props.updateTitle}
+            updateListName={this.props.updateListName}
             updateItem={this.props.updateItem}
             addItem={this.props.addItem}
             droppedItem={this.state.droppedItem}
