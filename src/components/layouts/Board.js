@@ -7,7 +7,6 @@ import Loader from '../Loader';
 import { Redirect } from 'react-router-dom';
 let authListener;
 let observerForLists;
-let observerForBoard;
 
 class Board extends React.Component {
     constructor (props) {
@@ -136,7 +135,6 @@ class Board extends React.Component {
 
         if (observerForLists) {
             observerForLists();
-            observerForBoard();
         }
     }
 
