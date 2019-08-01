@@ -25,18 +25,6 @@ class Board extends React.Component {
         }
     }
 
-    addList = title => {
-        const db = firebaseApp.firestore();
-        const lists = this.state.lists;
-        const lastIndex = Object.keys(lists).length;
-        const boardId = this.props.match.params.boardId;
-
-        db.collection('boards').doc(boardId).collection('lists').add({
-            name: title,
-            index: lastIndex
-        });
-    }
-
     updateListName = (listId, value) => {
         const db = firebaseApp.firestore();
         const boardId = this.props.match.params.boardId;
@@ -51,20 +39,32 @@ class Board extends React.Component {
         const db = firebaseApp.firestore();
         const boardId = this.props.match.params.boardId;
         let board;
-        const getDoc = await db.collection('boards').doc(boardId).get().then(doc => {
-                if (!doc.exists) {
-                  console.error('No such document!');
-                } else {
-                  board = doc.data();
-                }
-            }).catch(err => {
-                console.log('Error getting document', err);
-            });
-
-            this.getLists(board, user);
+        await db.collection('boards').doc(boardId).get().then(doc => {
+            if (!doc.exists) {
+              console.error('No such document!');
+            } else {
+              board = doc.data();
+              this.getLists(board, user);
+            }
+        }).catch(err => {
+            console.log('Error getting document', err);
+        });
     }
 
-    getLists = async (board,user) => {
+    addList = title => {
+        const db = firebaseApp.firestore();
+        const lists = this.state.lists;
+        const lastIndex = Object.keys(lists).length;
+        const boardId = this.props.match.params.boardId;
+
+        db.collection('boards').doc(boardId).collection('lists').add({
+            name: title,
+            index: lastIndex,
+            cards: []
+        });
+    }
+
+    getLists = async (board, user) => {
         const db = firebaseApp.firestore();
         const boardId = this.props.match.params.boardId;
         let query = db.collection('boards').doc(boardId).collection('lists').orderBy('index');;
@@ -90,7 +90,21 @@ class Board extends React.Component {
     }
 
     addCard = async (cardName, listId) => {
+        const db = firebaseApp.firestore();
+        const list = this.state.lists[listId];
+        const cards = list.cards;
+        const boardId = this.props.match.params.boardId;
 
+        cards.push({
+            title: cardName
+        })
+
+        await db.collection('boards')
+                .doc(boardId)
+                .collection('lists')
+                .doc(listId).update({
+                    cards
+                });
     }
 
     moveItem = (sourceItem, targetListKey, targetIndex) => {

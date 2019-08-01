@@ -3,9 +3,7 @@ import AssignedView from './AssignedView';
 import Labels from './Labels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faSquare,
-    faCheckSquare,
-    faUndoAlt
+    faSquare
 } from '@fortawesome/free-solid-svg-icons';
 import { DragSource } from "react-dnd";
 
@@ -14,56 +12,23 @@ class CardContent extends React.Component {
         super(props);
 
         let iconInButton = faSquare;
-        if (this.props.item.status === 2) {
-            iconInButton = faUndoAlt;
-        }
 
         this.mouseEnter = this.mouseEnter.bind(this);
         this.mouseLeave = this.mouseLeave.bind(this);
         this.state = {
             iconRendered: iconInButton,
-            item: { ...this.props.item },
+            card: { ...this.props.card },
             classes: null,
             height: 0
         }
     }
 
-    toggleStatus = () => {
-        let item = { ...this.props.item };
-
-        if (item.status === 1) {
-            item.status = 2;
-
-            this.setState({
-                iconRendered: faUndoAlt,
-                item: item
-            });
-        } else {
-            item.status = 1;
-
-            this.setState({
-                iconRendered: faSquare,
-                item: item
-            });
-        }
-
-        this.props.updateItem(item, this.props.index, this.props.listKey);
-    }
-
     mouseEnter () {
-        if (this.state.item.status === 1) {
-            this.setState({
-                iconRendered: faCheckSquare
-            });
-        }
+
     }
 
     mouseLeave () {
-        if (this.state.item.status === 1) {
-            this.setState({
-                iconRendered: faSquare
-            });
-        }
+
     }
 
     componentDidMount() {
@@ -73,9 +38,9 @@ class CardContent extends React.Component {
 
     render() {
         const { connectDragSource } = this.props;
-
+        console.log(this.state.card);
         return (
-            <div className={`status-${this.props.item.status} cardContent`}>
+            <div className={`status cardContent`}>
                 {connectDragSource(
                         <div className='cardContent' ref={ divElement => this.divElement = divElement}>
                         <div className='actionButton'>
@@ -92,7 +57,7 @@ class CardContent extends React.Component {
                         <div className='main'>
                             <Labels />
                             <div className='title wordwrap'>
-                                {this.props.item.title}
+                                {this.state.card.title}
                             </div>
                             <AssignedView />
                         </div>

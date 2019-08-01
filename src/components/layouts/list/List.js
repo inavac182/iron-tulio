@@ -39,7 +39,7 @@ class List extends React.Component {
 
                     <CardsContainer
                         listKey={this.props.listId}
-                        items={this.props.list.items}
+                        cards={this.props.list.cards}
                         updateItem={this.props.updateItem}
                         droppedItem={this.props.droppedItem}
                         moveItem={this.props.moveItem}
@@ -47,7 +47,7 @@ class List extends React.Component {
                         draggingInfo={this.props.draggingInfo} />
 
                     <NewCard
-                        listIndex={this.props.index}
+                        listIndex={this.props.listId}
                         addCard={this.props.addCard}
                     />
                 </div>

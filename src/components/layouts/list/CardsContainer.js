@@ -28,13 +28,14 @@ class CardsContainer extends React.Component {
     }
 
     getCards = () => {
-        return Object.keys(this.props.items).map(key => (
+        return this.props.cards.map((card, key) => (
             <div key={key} >
                 <Card
                     classes={this.state.classes}
                     listKey={this.props.listKey}
                     updateItem={this.props.updateItem}
-                    item={this.props.items[key]}
+                    index={key}
+                    card={card}
                     removePlaceHolder={this.removePlaceHolder}
                     moveItem={this.props.moveItem}
                     setDraggingInfo={this.props.setDraggingInfo}
@@ -51,7 +52,7 @@ class CardsContainer extends React.Component {
             classes = `noCardsAdded ${classes} ${this.state.classes}`;
         }
 
-        if (this.props.items && this.props.items) {
+        if (this.props.cards && this.props.cards) {
             renderCards = true;
         }
 

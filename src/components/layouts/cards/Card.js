@@ -17,9 +17,9 @@ class Card extends React.Component {
 
     render() {
         return (
-            <div className={`card status-${this.props.item.status} ${this.state.classes}`}>
+            <div className={`card ${this.state.classes}`}>
                 <CardDropppingArea
-                    index={this.props.item.index}
+                    index={this.props.index}
                     moveItem={this.props.moveItem}
                     listKey={this.props.listKey}
                     removePlaceHolder={this.props.removePlaceHolder}
@@ -32,7 +32,7 @@ class Card extends React.Component {
                     index={this.props.index}
                     listKey={this.props.listKey}
                     updateItem={this.props.updateItem}
-                    item={this.props.item}
+                    card={this.props.card}
                     rotate={this.rotate}
                     showPlaceHolder={this.showPlaceHolder}
                     setDraggingInfo={this.props.setDraggingInfo}

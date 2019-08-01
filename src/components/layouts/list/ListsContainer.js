@@ -24,7 +24,7 @@ class ListsContainer extends React.Component {
             removeList={this.props.removeList}
             updateListName={this.props.updateListName}
             updateItem={this.props.updateItem}
-            addItem={this.props.addItem}
+            addCard={this.props.addCard}
             droppedItem={this.state.droppedItem}
             moveItem={this.props.moveItem}
             setDraggingInfo={this.props.setDraggingInfo}
