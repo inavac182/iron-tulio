@@ -38,7 +38,7 @@ class CardContent extends React.Component {
 
     render() {
         const { connectDragSource } = this.props;
-        console.log(this.state.card);
+
         return (
             <div className={`status cardContent`}>
                 {connectDragSource(
